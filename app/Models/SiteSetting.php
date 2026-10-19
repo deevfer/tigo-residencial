@@ -36,6 +36,7 @@ class SiteSetting extends Model
         'microcopy',
         'whatsapp_button_text',
         'whatsapp_url',
+        'success_message',
         'google_tag_id',
         'google_analytics_id',
         'facebook_pixel_id',

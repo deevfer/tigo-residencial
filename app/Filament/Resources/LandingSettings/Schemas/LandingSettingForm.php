@@ -87,6 +87,13 @@ class LandingSettingForm
                                     ->label('URL WhatsApp')
                                     ->url()
                                     ->required(),
+                                Textarea::make('success_message')
+                                    ->label('Mensaje despues de enviar el formulario')
+                                    ->helperText('Se muestra cuando el lead se guarda correctamente y no se redirige a WhatsApp.')
+                                    ->rows(3)
+                                    ->required()
+                                    ->maxLength(500)
+                                    ->columnSpanFull(),
                             ])
                             ->columns(2),
                     ])
