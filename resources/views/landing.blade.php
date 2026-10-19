@@ -11,6 +11,7 @@
     $ogImageUrl = $settings->assetUrl($settings->og_image ?: $settings->banner_image, 'images/banner-tigo-residencial.jpeg');
     $viewErrors = $errors ?? new \Illuminate\Support\ViewErrorBag();
     $recaptchaEnabled = $settings->recaptchaEnabled();
+    $leadSubmitted = request()->boolean('sent');
 @endphp
 <!DOCTYPE html>
 <html lang="es">
@@ -128,11 +129,12 @@
                     </div>
                 </section>
 
-                <section class="form-panel" aria-label="Formulario de contacto" aria-labelledby="landing-title">
-                    @if (session('status'))
-                        <div class="status" role="status">{{ session('status') }}</div>
-                    @endif
-
+                <section id="contacto" class="form-panel" aria-label="Formulario de contacto" aria-labelledby="landing-title">
+                    @if ($leadSubmitted)
+                        <div class="status" role="status" tabindex="-1">
+                            {{ $settings->success_message ?: 'Gracias. Un asesor te llamara en minutos.' }}
+                        </div>
+                    @else
                     <form class="lead-form" id="lead-form" action="{{ route('leads.store') }}" method="POST">
                         @csrf
                         <input class="honeypot" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
@@ -196,6 +198,7 @@
                         </button>
                         @endif
                     </div>
+                    @endif
                 </section>
             </div>
         </main>
@@ -209,6 +212,8 @@
         <script>
             (() => {
                 const form = document.getElementById('lead-form');
+                if (!form) return;
+
                 let recaptchaReady = false;
 
                 form.addEventListener('submit', (event) => {

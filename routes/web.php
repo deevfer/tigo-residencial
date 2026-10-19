@@ -65,5 +65,5 @@ Route::post('/leads', function (Request $request) {
         return redirect()->away($settings->whatsapp_url);
     }
 
-    return back()->with('status', $settings->success_message ?: 'Gracias. Un asesor te llamara en minutos.');
+    return redirect(url('/') . '/?sent=1#contacto');
 })->name('leads.store');

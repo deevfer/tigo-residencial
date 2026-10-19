@@ -299,12 +299,17 @@ input {
 }
 
 .status {
-    margin: 0 clamp(24px, 5vw, 34px) 0;
+    display: grid;
+    place-items: center;
+    min-height: clamp(210px, 34vw, 320px);
+    margin: 0;
     border-radius: 12px;
-    padding: 14px 18px;
+    padding: clamp(28px, 6vw, 48px);
     background: var(--tigo-cyan-soft);
     color: var(--tigo-blue);
-    font-size: 16px;
+    font-size: clamp(17px, 2.2vw, 22px);
+    font-weight: 700;
+    line-height: 1.45;
     text-align: center;
 }
 
