@@ -89,7 +89,7 @@ input {
 }
 
 .headline-block {
-    order: 2;
+    order: 1;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -160,7 +160,7 @@ input {
 }
 
 .lead-form {
-    order: 1;
+    order: 2;
     overflow: hidden;
     border-radius: clamp(18px, 2.4vw, 24px) clamp(18px, 2.4vw, 24px) 0 0;
     background: var(--tigo-cyan);
