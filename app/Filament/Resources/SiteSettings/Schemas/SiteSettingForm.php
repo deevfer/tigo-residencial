@@ -147,14 +147,14 @@ class SiteSettingForm
                         Tab::make('reCAPTCHA')
                             ->schema([
                                 Toggle::make('recaptcha_enabled')
-                                    ->label('Activar Google reCAPTCHA')
-                                    ->helperText('Al activarlo, la landing mostrara el checkbox de reCAPTCHA y validara el token antes de guardar leads.'),
+                                    ->label('Activar Google reCAPTCHA v3')
+                                    ->helperText('Proteccion invisible, sin checkbox. Requiere claves de tipo reCAPTCHA v3 y valida cada lead con un puntaje minimo de 0.5.'),
                                 TextInput::make('recaptcha_site_key')
-                                    ->label('Site key')
+                                    ->label('Site key v3')
                                     ->maxLength(255)
                                     ->columnSpanFull(),
                                 TextInput::make('recaptcha_secret_key')
-                                    ->label('Secret key')
+                                    ->label('Secret key v3')
                                     ->password()
                                     ->revealable()
                                     ->maxLength(255)

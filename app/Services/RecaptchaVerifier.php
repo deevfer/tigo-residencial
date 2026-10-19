@@ -8,6 +8,10 @@ use Throwable;
 
 class RecaptchaVerifier
 {
+    private const ACTION = 'lead_submit';
+
+    private const MINIMUM_SCORE = 0.5;
+
     public function verify(?string $token, ?string $ipAddress, SiteSetting $settings): bool
     {
         if (! $settings->recaptchaEnabled()) {
@@ -27,7 +31,10 @@ class RecaptchaVerifier
                     'remoteip' => $ipAddress,
                 ]);
 
-            return $response->successful() && $response->json('success') === true;
+            return $response->successful()
+                && $response->json('success') === true
+                && $response->json('action') === self::ACTION
+                && (float) $response->json('score', 0) >= self::MINIMUM_SCORE;
         } catch (Throwable) {
             return false;
         }

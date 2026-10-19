@@ -56,7 +56,7 @@
     <link href="https://fonts.bunny.net/css?family=inter:400,500,700,800" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/landing.css') }}">
     @if ($recaptchaEnabled)
-        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+        <script src="https://www.google.com/recaptcha/api.js?render={{ urlencode($settings->recaptcha_site_key) }}"></script>
     @endif
     @if (filled($settings->google_tag_id))
         <script>
@@ -137,6 +137,9 @@
                         @csrf
                         <input class="honeypot" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
                         <input id="contact_preference" type="hidden" name="contact_preference" value="call">
+                        @if ($recaptchaEnabled)
+                            <input id="recaptcha_token" type="hidden" name="g-recaptcha-response">
+                        @endif
 
                         <div class="form-heading">
                             <span>{{ $settings->form_heading }}</span>
@@ -159,13 +162,8 @@
                                 @endif
                             </div>
 
-                            @if ($recaptchaEnabled)
-                                <div class="recaptcha-field">
-                                    <div class="g-recaptcha" data-sitekey="{{ $settings->recaptcha_site_key }}"></div>
-                                    @if ($viewErrors->has('g-recaptcha-response'))
-                                        <span class="error">{{ $viewErrors->first('g-recaptcha-response') }}</span>
-                                    @endif
-                                </div>
+                            @if ($recaptchaEnabled && $viewErrors->has('g-recaptcha-response'))
+                                <span class="error">{{ $viewErrors->first('g-recaptcha-response') }}</span>
                             @endif
                         </div>
                     </form>
@@ -205,5 +203,27 @@
             <p>{{ $settings->footer_line_2 }}</p>
         </footer>
     </div>
+    @if ($recaptchaEnabled)
+        <script>
+            (() => {
+                const form = document.getElementById('lead-form');
+                let recaptchaReady = false;
+
+                form.addEventListener('submit', (event) => {
+                    if (recaptchaReady) return;
+
+                    event.preventDefault();
+                    grecaptcha.ready(() => {
+                        grecaptcha.execute(@js($settings->recaptcha_site_key), { action: 'lead_submit' })
+                            .then((token) => {
+                                document.getElementById('recaptcha_token').value = token;
+                                recaptchaReady = true;
+                                form.requestSubmit(event.submitter);
+                            });
+                    });
+                });
+            })();
+        </script>
+    @endif
 </body>
 </html>
