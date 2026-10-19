@@ -15,4 +15,15 @@ class EditLandingSetting extends EditRecord
     {
         return [];
     }
+
+    protected function mutateFormDataBeforeSave(array $data): array
+    {
+        foreach (['banner_image', 'banner_image_mobile'] as $imageField) {
+            if (array_key_exists($imageField, $data) && blank($data[$imageField])) {
+                unset($data[$imageField]);
+            }
+        }
+
+        return $data;
+    }
 }
