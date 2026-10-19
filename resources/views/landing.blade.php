@@ -130,17 +130,18 @@
                 </section>
 
                 <section id="contacto" class="form-panel" aria-label="Formulario de contacto" aria-labelledby="landing-title">
-                    @if ($leadSubmitted)
-                        <div class="status" role="status" tabindex="-1">
-                            {{ $settings->success_message ?: 'Gracias. Un asesor te llamara en minutos.' }}
-                        </div>
-                    @else
                     <form class="lead-form" id="lead-form" action="{{ route('leads.store') }}" method="POST">
                         @csrf
                         <input class="honeypot" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
                         <input id="contact_preference" type="hidden" name="contact_preference" value="call">
                         @if ($recaptchaEnabled)
                             <input id="recaptcha_token" type="hidden" name="g-recaptcha-response">
+                        @endif
+
+                        @if ($leadSubmitted)
+                            <div class="status" role="status" tabindex="-1">
+                                {{ $settings->success_message ?: 'Gracias. Un asesor te llamara en minutos.' }}
+                            </div>
                         @endif
 
                         <div class="form-heading">
@@ -198,7 +199,6 @@
                         </button>
                         @endif
                     </div>
-                    @endif
                 </section>
             </div>
         </main>
