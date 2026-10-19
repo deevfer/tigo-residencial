@@ -5,6 +5,7 @@ namespace App\Filament\Resources\LandingSettings\Schemas;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Tabs;
 use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Schemas\Schema;
@@ -79,6 +80,11 @@ class LandingSettingForm
                                 TextInput::make('microcopy')
                                     ->label('Texto auxiliar')
                                     ->required()
+                                    ->columnSpanFull(),
+                                Toggle::make('whatsapp_enabled')
+                                    ->label('Mostrar boton de WhatsApp')
+                                    ->helperText('Permite activar u ocultar el CTA de WhatsApp en la landing.')
+                                    ->default(true)
                                     ->columnSpanFull(),
                                 TextInput::make('whatsapp_button_text')
                                     ->label('Texto boton WhatsApp')

@@ -35,7 +35,7 @@ Route::post('/leads', function (Request $request) {
     $validated = $request->validate([
         'name' => ['required', 'string', 'max:120'],
         'phone' => ['required', 'digits:8'],
-        'contact_preference' => ['required', 'in:call,whatsapp'],
+        'contact_preference' => ['required', $settings->whatsapp_enabled ? 'in:call,whatsapp' : 'in:call'],
         'g-recaptcha-response' => [$recaptchaEnabled ? 'required' : 'nullable', 'string'],
     ], [
         'name.required' => 'Ingresa tu nombre y apellido.',
@@ -61,7 +61,7 @@ Route::post('/leads', function (Request $request) {
 
     app(ZapierLeadWebhook::class)->send($lead, $settings);
 
-    if ($validated['contact_preference'] === 'whatsapp' && filled($settings->whatsapp_url)) {
+    if ($settings->whatsapp_enabled && $validated['contact_preference'] === 'whatsapp' && filled($settings->whatsapp_url)) {
         return redirect()->away($settings->whatsapp_url);
     }
 

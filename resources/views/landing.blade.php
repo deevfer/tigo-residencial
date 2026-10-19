@@ -184,6 +184,7 @@
 
                         <p class="microcopy">{{ $settings->microcopy }}</p>
 
+                        @if ($settings->whatsapp_enabled)
                         <button class="whatsapp-button" type="submit" form="lead-form" onclick="document.getElementById('contact_preference').value = 'whatsapp'">
                             <span class="whatsapp-icon" aria-hidden="true">
                                 <svg viewBox="0 0 32 32">
@@ -193,6 +194,7 @@
                             </span>
                             <span class="whatsapp-text">{{ $settings->whatsapp_button_text }}</span>
                         </button>
+                        @endif
                     </div>
                 </section>
             </div>

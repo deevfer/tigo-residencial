@@ -34,6 +34,7 @@ class SiteSetting extends Model
         'phone_placeholder',
         'call_button_text',
         'microcopy',
+        'whatsapp_enabled',
         'whatsapp_button_text',
         'whatsapp_url',
         'success_message',
@@ -59,6 +60,7 @@ class SiteSetting extends Model
             'robots_follow' => 'boolean',
             'zapier_enabled' => 'boolean',
             'recaptcha_enabled' => 'boolean',
+            'whatsapp_enabled' => 'boolean',
         ];
     }
 
