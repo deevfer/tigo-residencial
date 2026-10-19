@@ -89,7 +89,7 @@ input {
 }
 
 .headline-block {
-    order: 1;
+    order: 3;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -160,7 +160,7 @@ input {
 }
 
 .lead-form {
-    order: 2;
+    order: 1;
     overflow: hidden;
     border-radius: clamp(18px, 2.4vw, 24px) clamp(18px, 2.4vw, 24px) 0 0;
     background: var(--tigo-cyan);
@@ -255,7 +255,7 @@ input {
 }
 
 .cta-area {
-    order: 3;
+    order: 2;
     display: grid;
     justify-items: center;
     gap: 9px;
@@ -392,18 +392,18 @@ input {
 
     .hero-banner {
         grid-column: 1;
-        grid-row: 1 / span 2;
+        grid-row: 1 / span 3;
         align-self: center;
     }
 
     .lead-form {
         grid-column: 2;
-        grid-row: 1;
+        grid-row: 2;
     }
 
     .headline-block {
         grid-column: 2;
-        grid-row: 2;
+        grid-row: 1;
         align-items: center;
     }
 
