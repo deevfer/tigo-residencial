@@ -399,6 +399,7 @@ input {
     .lead-form {
         grid-column: 2;
         grid-row: 2;
+        border-radius: 0;
     }
 
     .headline-block {
