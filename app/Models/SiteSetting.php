@@ -38,6 +38,7 @@ class SiteSetting extends Model
         'whatsapp_button_text',
         'whatsapp_url',
         'success_message',
+        'duplicate_message',
         'google_tag_id',
         'google_analytics_id',
         'facebook_pixel_id',
@@ -81,12 +82,12 @@ class SiteSetting extends Model
             return asset($path);
         }
 
-        return asset('storage/' . ltrim($path, '/'));
+        return asset('storage/'.ltrim($path, '/'));
     }
 
     public function robotsContent(): string
     {
-        return ($this->robots_index ? 'index' : 'noindex') . ', ' . ($this->robots_follow ? 'follow' : 'nofollow');
+        return ($this->robots_index ? 'index' : 'noindex').', '.($this->robots_follow ? 'follow' : 'nofollow');
     }
 
     public function recaptchaEnabled(): bool

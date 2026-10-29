@@ -3,8 +3,8 @@
 namespace App\Filament\Resources\LandingSettings\Schemas;
 
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Tabs;
 use Filament\Schemas\Components\Tabs\Tab;
@@ -96,6 +96,13 @@ class LandingSettingForm
                                 Textarea::make('success_message')
                                     ->label('Mensaje despues de enviar el formulario')
                                     ->helperText('Se muestra cuando el lead se guarda correctamente y no se redirige a WhatsApp.')
+                                    ->rows(3)
+                                    ->required()
+                                    ->maxLength(500)
+                                    ->columnSpanFull(),
+                                Textarea::make('duplicate_message')
+                                    ->label('Mensaje para numero ya registrado')
+                                    ->helperText('Se muestra cuando el telefono ya existe y no se crea un lead duplicado.')
                                     ->rows(3)
                                     ->required()
                                     ->maxLength(500)

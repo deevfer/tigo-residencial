@@ -12,6 +12,7 @@
     $viewErrors = $errors ?? new \Illuminate\Support\ViewErrorBag();
     $recaptchaEnabled = $settings->recaptchaEnabled();
     $leadSubmitted = request()->boolean('sent');
+    $leadDuplicate = request()->boolean('duplicate');
 @endphp
 <!DOCTYPE html>
 <html lang="es">
@@ -138,9 +139,11 @@
                             <input id="recaptcha_token" type="hidden" name="g-recaptcha-response">
                         @endif
 
-                        @if ($leadSubmitted)
+                        @if ($leadSubmitted || $leadDuplicate)
                             <div class="status" role="status" tabindex="-1">
-                                {{ $settings->success_message ?: 'Gracias. Un asesor te llamara en minutos.' }}
+                                {{ $leadDuplicate
+                                    ? ($settings->duplicate_message ?: 'Este numero ya se encuentra registrado. Uno de nuestros asesores lo estara contactando pronto.')
+                                    : ($settings->success_message ?: 'Gracias. Un asesor te llamara en minutos.') }}
                             </div>
                         @endif
 

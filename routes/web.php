@@ -7,6 +7,7 @@ use App\Services\RecaptchaVerifier;
 use App\Services\ZapierLeadWebhook;
 use App\Support\DeviceDetector;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function (Request $request) {
@@ -50,14 +51,24 @@ Route::post('/leads', function (Request $request) {
             ->withInput();
     }
 
-    $lead = Lead::create([
-        'name' => $validated['name'],
-        'phone' => $validated['phone'],
-        'contact_preference' => $validated['contact_preference'],
-        'source' => 'residencial',
-        'ip_address' => $request->ip(),
-        'user_agent' => (string) $request->userAgent(),
-    ]);
+    $lead = Cache::lock('lead-phone:'.$validated['phone'], 10)->block(5, function () use ($request, $validated) {
+        if (Lead::where('phone', $validated['phone'])->exists()) {
+            return null;
+        }
+
+        return Lead::create([
+            'name' => $validated['name'],
+            'phone' => $validated['phone'],
+            'contact_preference' => $validated['contact_preference'],
+            'source' => 'residencial',
+            'ip_address' => $request->ip(),
+            'user_agent' => (string) $request->userAgent(),
+        ]);
+    });
+
+    if (! $lead) {
+        return redirect(url('/').'/?duplicate=1#contacto');
+    }
 
     app(ZapierLeadWebhook::class)->send($lead, $settings);
 
@@ -65,5 +76,5 @@ Route::post('/leads', function (Request $request) {
         return redirect()->away($settings->whatsapp_url);
     }
 
-    return redirect(url('/') . '/?sent=1#contacto');
+    return redirect(url('/').'/?sent=1#contacto');
 })->name('leads.store');
