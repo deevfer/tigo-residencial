@@ -3,6 +3,7 @@
 use App\Models\Lead;
 use App\Models\PageView;
 use App\Models\SiteSetting;
+use App\Rules\GuatemalaPhoneNumber;
 use App\Services\RecaptchaVerifier;
 use App\Services\ZapierLeadWebhook;
 use App\Support\DeviceDetector;
@@ -35,7 +36,7 @@ Route::post('/leads', function (Request $request) {
 
     $validated = $request->validate([
         'name' => ['required', 'string', 'max:120'],
-        'phone' => ['required', 'digits:8'],
+        'phone' => ['required', 'digits:8', new GuatemalaPhoneNumber],
         'contact_preference' => ['required', $settings->whatsapp_enabled ? 'in:call,whatsapp' : 'in:call'],
         'g-recaptcha-response' => [$recaptchaEnabled ? 'required' : 'nullable', 'string'],
     ], [

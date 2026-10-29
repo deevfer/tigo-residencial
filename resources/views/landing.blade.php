@@ -162,7 +162,7 @@
 
                             <div class="field">
                                 <label for="phone">{{ $settings->phone_label }}</label>
-                                <input id="phone" name="phone" type="tel" value="{{ old('phone') }}" placeholder="{{ $settings->phone_placeholder }}" inputmode="numeric" autocomplete="tel" pattern="[0-9]{8}" maxlength="8" required aria-required="true" oninput="this.value = this.value.replace(/\D/g, '').slice(0, 8)">
+                                <input id="phone" name="phone" type="tel" value="{{ old('phone') }}" placeholder="{{ $settings->phone_placeholder }}" inputmode="numeric" autocomplete="tel" pattern="[2-7][0-9]{7}" maxlength="8" title="Ingresa un numero valido de Guatemala de 8 digitos" required aria-required="true" oninput="this.value = this.value.replace(/\D/g, '').slice(0, 8)">
                                 @if ($viewErrors->has('phone'))
                                     <span class="error">{{ $viewErrors->first('phone') }}</span>
                                 @endif
